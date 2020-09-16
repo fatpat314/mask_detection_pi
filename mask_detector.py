@@ -107,8 +107,8 @@ def camera_stream():
             label = "{}: {:.2f}%".format(label, max(mask, withoutMask) * 100)
             if withoutMask > 0.999:
                 print("withoutMask: ", withoutMask, "\a")
-                os.system("echo 'Put on a mask'")
-                os.system("say -v  'Put on a mask'")
+                # os.system("echo 'Put on a mask'")
+                # os.system("say -v  'Put on a mask'")
 
 
             # display the label and bounding box rectangle on the output frame
