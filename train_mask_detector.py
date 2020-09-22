@@ -44,17 +44,17 @@ for category in CATEGORIES:
         image = img_to_array(image)
         image = preprocess_input(image)
 
-        if len(data) <= 1000:
-        	data.append(image)
-        	labels.append(category)
-        else:
-            pass
+        # if len(data) <= 1000:
+        data.append(image)
+        labels.append(category)
+        # else:
+            # pass
 
 # perform one-hot encoding on the labels
 lb = LabelBinarizer()
 labels = lb.fit_transform(labels)
 labels = to_categorical(labels)
-data = np.array(data, dtype="float32")#"float32"
+data = np.array(data)#"float32"
 labels = np.array(labels)
 
 (trainX, testX, trainY, testY) = train_test_split(data, labels,

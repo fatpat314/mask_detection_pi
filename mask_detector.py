@@ -87,33 +87,33 @@ def camera_stream():
 
         # loop over the detected face locations and their corresponding locations
         for (box, predictions) in zip(locations, predictions):
-
+            (startX, startY, endX, endY) = box
             (mask, withoutMask) = predictions
 
             # determine the class label and color we'll use to draw the bounding box and text
             label = "Mask"
             if mask > withoutMask:
-                pass #color = (0, 255, 0)
+                color = (0, 255, 0)
             elif withoutMask > 0.999:
                 label = "No Mask"
 
-            # if label == "Mask":
-            #     pass #color = (0, 255, 0)
-            # elif withoutMask > 0.999:
-            #     color = (0, 0, 255)
+            if label == "Mask":
+                color = (0, 255, 0)
+            elif withoutMask > 0.999:
+                color = (0, 0, 255)
 
 
             # include the probability in the label
             label = "{}: {:.2f}%".format(label, max(mask, withoutMask) * 100)
             if withoutMask > 0.999:
                 print("withoutMask: ", withoutMask, "\a")
-                # os.system("echo 'Put on a mask'")
-                # os.system("say -v  'Put on a mask'")
+                os.system("echo 'Put on a mask'")
+                os.system("say 'Put on a mask'")
 
 
             # display the label and bounding box rectangle on the output frame
-            # cv2.putText(frame, label, (startX, startY - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.45, color, 2)
-            # cv2.rectangle(frame, (startX, startY), (endX, endY), color, 2)
+            cv2.putText(frame, label, (startX, startY - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.45, color, 2)
+            cv2.rectangle(frame, (startX, startY), (endX, endY), color, 2)
 
         # show the output frame
         # cv2.imshow("Frame", frame)
