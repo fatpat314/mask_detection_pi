@@ -8,6 +8,7 @@ import imutils
 import cv2
 import os
 
+
 def mask_detector(frame,faceNet,maskNet):
     #grab the dimensions of the frame and then construct a blob from it
 
@@ -88,12 +89,11 @@ def camera_stream():
 
         # loop over the detected face locations and their corresponding locations
         for (box, predictions) in zip(locations, predictions):
-            (startX, startY, endX, endY) = box
             (mask, withoutMask) = predictions
 
             if withoutMask > 0.999:
-                print("withoutMask: ", withoutMask)
                 playsound("mask.wav")
+
 
 
         # show the output frame
