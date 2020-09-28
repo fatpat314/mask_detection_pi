@@ -103,7 +103,7 @@ def camera_stream():
 
             if label == "Mask":
                 color = (0, 255, 0)
-                mask_count += 1
+                # mask_count += 1
                 # if mask_count == 10:
                 playsound("mask.wav")
                 os.system("vcgencmd display_power 0")
