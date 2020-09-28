@@ -1,0 +1,1 @@
+say -v "Alice"  -o mask.wav --data-format=LEF32@32000 "I will ask, Please put on a mask."

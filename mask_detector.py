@@ -7,6 +7,7 @@ import numpy as np
 import imutils
 import cv2
 import os
+import time
 
 
 def mask_detector(frame,faceNet,maskNet):
@@ -77,6 +78,8 @@ def camera_stream():
     # initialize the video stream
     print("[INFO] starting video stream...")
     vs = VideoStream(src=0).start()
+    count = 0
+    mask_count = 0
     # loop over the frames from the video stream
     while True:
         # grab the frame from the threaded video stream and resize it
@@ -89,14 +92,43 @@ def camera_stream():
 
         # loop over the detected face locations and their corresponding locations
         for (box, predictions) in zip(locations, predictions):
+            (startX, startY, endX, endY) = box
             (mask, withoutMask) = predictions
 
-            if withoutMask > 0.999:
-                playsound("mask.wav")
+            label = "Mask"
+            if mask > withoutMask:
+                color = (0, 255, 0)
+            elif withoutMask > 0.99:
+                label = "No Mask"
 
+            if label == "Mask":
+                color = (0, 255, 0)
+                mask_count += 1
+                if mask_count == 10:
+                    playsound("mask.wav")
+                    os.system("vcgencmd display_power 0")
+                elif mask_count > 10:
+                    pass
 
+            elif withoutMask > 0.999:
+                color = (0, 0, 255)
+                count += 1
+                if count == 10:
+                    playsound("no_mask.wav")
+                    os.system("vcgencmd display_power 1")
+                elif count > 10:
+                    count = 0
+                    mask_count = 0
+
+            # include the probability in the label
+            label = "{}: {:.2f}%".format(label, max(mask, withoutMask) * 100)
+
+            # display the label and bounding box rectangle on the output frame
+            cv2.putText(frame, label, (startX, startY - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.45, color, 2)
+            cv2.rectangle(frame, (startX, startY), (endX, endY), color, 2)
 
         # show the output frame
+        cv2.imshow("Frame", frame)
         key = cv2.waitKey(1) & 0xFF
 
         # if the 'q' key was pressed, break from the loop
