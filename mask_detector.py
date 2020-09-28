@@ -78,8 +78,8 @@ def camera_stream():
     # initialize the video stream
     print("[INFO] starting video stream...")
     vs = VideoStream(src=0).start()
-    count = 0
-    mask_count = 0
+    # count = 0
+    # mask_count = 0
     # loop over the frames from the video stream
     while True:
         # grab the frame from the threaded video stream and resize it
@@ -104,21 +104,21 @@ def camera_stream():
             if label == "Mask":
                 color = (0, 255, 0)
                 mask_count += 1
-                if mask_count == 10:
-                    playsound("mask.wav")
-                    os.system("vcgencmd display_power 0")
-                elif mask_count > 10:
-                    pass
+                # if mask_count == 10:
+                playsound("mask.wav")
+                os.system("vcgencmd display_power 0")
+                # elif mask_count > 10:
+                    # pass
 
-            elif withoutMask > 0.999:
+            elif withoutMask > 0.99:
                 color = (0, 0, 255)
-                count += 1
-                if count == 10:
-                    playsound("no_mask.wav")
-                    os.system("vcgencmd display_power 1")
-                elif count > 10:
-                    count = 0
-                    mask_count = 0
+                # count += 1
+                # if count == 10:
+                playsound("no_mask.wav")
+                os.system("vcgencmd display_power 1")
+                # elif count > 10:
+                # count = 0
+                # mask_count = 0
 
             # include the probability in the label
             label = "{}: {:.2f}%".format(label, max(mask, withoutMask) * 100)
