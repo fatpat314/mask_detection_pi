@@ -105,8 +105,9 @@ def camera_stream():
                 color = (0, 255, 0)
                 # mask_count += 1
                 # if mask_count == 10:
-                playsound("mask.wav")
-                os.system("vcgencmd display_power 0")
+                if mask > 0.999
+                    playsound("mask.wav")
+                    # os.system("vcgencmd display_power 0")
                 # elif mask_count > 10:
                     # pass
 
@@ -115,7 +116,7 @@ def camera_stream():
                 # count += 1
                 # if count == 10:
                 playsound("no_mask.wav")
-                os.system("vcgencmd display_power 1")
+                # os.system("vcgencmd display_power 1")
                 # elif count > 10:
                 # count = 0
                 # mask_count = 0
