@@ -44,11 +44,11 @@ for category in CATEGORIES:
         image = img_to_array(image)
         image = preprocess_input(image)
 
-        # if len(data) <= 1000:
-        data.append(image)
-        labels.append(category)
-        # else:
-            # pass
+        if len(data) <= 1000:
+            data.append(image)
+            labels.append(category)
+        else:
+            pass
 
 # perform one-hot encoding on the labels
 lb = LabelBinarizer()
