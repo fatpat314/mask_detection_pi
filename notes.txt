@@ -53,3 +53,22 @@ OpenCV:
 
 sklearn:
     pip3 install sklearn
+
+    sudo bazel --host_jvm_args=-Xmx1624m build \
+                 --config=noaws \
+                 --config=nogcp \
+                 --config=nohdfs \
+                 --config=nonccl \
+                 --config=monolithic \
+                 --config=v2 \
+                 --local_cpu_resources=1 \
+                 --copt=-mfpu=neon-vfpv4 \
+                 --copt=-ftree-vectorize \
+                 --copt=-funsafe-math-optimizations \
+                 --copt=-ftree-loop-vectorize \
+                 --copt=-fomit-frame-pointer \
+                 --copt=-DRASPBERRY_PI \
+                 --host_copt=-DRASPBERRY_PI \
+                 --linkopt=-Wl,-latomic \
+                 --host_linkopt=-Wl,-latomic \
+                 //tensorflow/tools/pip_package:build_pip_package
